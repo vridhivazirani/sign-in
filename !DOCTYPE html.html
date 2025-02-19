@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup & Login Form</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #000; /* Black background */
+            color: #fff; /* White text */
+        }
+
+        .container {
+            background: #1a1a1a; /* Dark gray container */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1); /* White shadow */
+            width: 350px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #fff; /* White text */
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            padding-left: 40px;
+            border: 2px solid #444; /* Dark gray border */
+            border-radius: 8px;
+            font-size: 16px;
+            background: #333; /* Dark gray input background */
+            color: #fff; /* White text */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: #fff; /* White border on focus */
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); /* White shadow */
+            outline: none;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff; /* White icon */
+        }
+
+        .input-group input::placeholder {
+            color: #aaa; /* Light gray placeholder */
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #fff; /* White button */
+            color: #000; /* Black text */
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ddd; /* Light gray on hover */
+        }
+
+        .btn:active {
+            background-color: #bbb; /* Darker gray on click */
+        }
+
+        .message {
+            margin-top: 15px;
+            color: #fff; /* White text */
+            font-weight: bold;
+        }
+
+        .toggle-form {
+            margin-top: 15px;
+            color: #fff; /* White text */
+        }
+
+        .toggle-form a {
+            color: #fff; /* White text */
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .toggle-form a:hover {
+            color: #ddd; /* Light gray on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 id="formTitle">Sign Up</h2>
+        <form id="signupForm">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="username" placeholder="Username" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn" id="submitBtn">Sign Up</button>
+        </form>
+
+        <form id="loginForm" style="display: none;">
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="loginEmail" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn" id="loginBtn">Log In</button>
+        </form>
+
+        <div id="message" class="message"></div>
+
+        <div class="toggle-form">
+            <span id="toggleText">Already have an account? </span>
+            <a id="toggleLink" onclick="toggleForm()">Log In</a>
+        </div>
+    </div>
+
+    <script>
+        // Simulated database for signed-up users
+        let users = [];
+
+        // Toggle between Sign Up and Log In forms
+        function toggleForm() {
+            const signupForm = document.getElementById('signupForm');
+            const loginForm = document.getElementById('loginForm');
+            const formTitle = document.getElementById('formTitle');
+            const toggleText = document.getElementById('toggleText');
+            const toggleLink = document.getElementById('toggleLink');
+
+            if (signupForm.style.display === 'none') {
+                signupForm.style.display = 'block';
+                loginForm.style.display = 'none';
+                formTitle.textContent = 'Sign Up';
+                toggleText.textContent = 'Already have an account? ';
+                toggleLink.textContent = 'Log In';
+            } else {
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+                formTitle.textContent = 'Log In';
+                toggleText.textContent = 'Don\'t have an account? ';
+                toggleLink.textContent = 'Sign Up';
+            }
+        }
+
+        // Handle Sign Up form submission
+        document.getElementById('signupForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Save user data (simulated)
+            users.push({ username, email, password });
+
+            document.getElementById('message').textContent = 'Sign up successful!';
+        });
+
+        // Handle Log In form submission
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Check if user exists
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                document.getElementById('message').textContent = 'Logged in successfully!';
+                setTimeout(() => {
+                    window.location.href = 'https://ni053.wordpress.com/?_gl=1*mzu1ov*_gcl_au*OTgxMDAyMDk0LjE3Mzk4NTQ0OTg.';
+                }, 2000);
+            } else {
+                document.getElementById('message').textContent = 'Invalid email or password.';
+            }
+        });
+    </script>
+</body>
+</html>
